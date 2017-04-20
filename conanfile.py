@@ -35,7 +35,6 @@ class LibresslConan(ConanFile):
             self.run("cmake --build . %s" % cmake.build_config)
 
     def package(self):
-        #self.copy("FindLibreSSL.cmake", ".", ".")
         self.copy("*.cmake", dst="include", src=self.src_dir + "/include", keep_path=True)
         self.copy("*.marks", dst="include", src=self.src_dir + "/include", keep_path=True)
         self.copy("*.h", dst="include/openssl", src=self.src_dir + "/include/openssl", keep_path=False)
@@ -55,4 +54,8 @@ class LibresslConan(ConanFile):
                 self.copy("*.lib", dst="lib", src=self.src_dir, keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs = ["libressl"]
+        if self.settings.compiler == "Visual Studio":
+            suffix = str(self.settings.compiler.runtime)
+            self.cpp_info.libs = ["ssleay32" + suffix, "libeay32" + suffix, "crypt32", "msi"]
+        elif self.settings.os != "Windows":
+            self.cpp_info.libs = ["ssl", "crypto", "tls"]

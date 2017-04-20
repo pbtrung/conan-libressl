@@ -106,7 +106,6 @@ find_package_handle_standard_args(LibreSSL
     "Could NOT find LibreSSL, try to set the path to LibreSSL root folder in the system variable LIBRESSL_ROOT_DIR"
 )
 
-
 mark_as_advanced(
     LIBRESSL_ROOT_DIR
     LIBRESSL_INCLUDE_DIR
