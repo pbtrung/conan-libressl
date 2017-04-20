@@ -27,12 +27,6 @@ class LibresslConan(ConanFile):
         unzip(zip_name)
         os.unlink(zip_name)
 
-    def configure(self):
-        self.requires.add("zlib/1.2.11@lasote/stable", private=False)
-
-    def config_options(self):
-        self.options["zlib"].shared = self.options.shared
-
     def build(self):
         with tools.chdir(self.src_dir):
             cmake = CMake(self)
@@ -41,7 +35,7 @@ class LibresslConan(ConanFile):
             self.run("cmake --build . %s" % cmake.build_config)
 
     def package(self):
-        self.copy("FindLibreSSL.cmake", ".", ".")
+        #self.copy("FindLibreSSL.cmake", ".", ".")
         self.copy("*.cmake", dst="include", src=self.src_dir + "/include", keep_path=True)
         self.copy("*.marks", dst="include", src=self.src_dir + "/include", keep_path=True)
         self.copy("*.h", dst="include/openssl", src=self.src_dir + "/include/openssl", keep_path=False)
