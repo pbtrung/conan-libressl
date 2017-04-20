@@ -26,13 +26,13 @@ class LibresslConan(ConanFile):
         unzip(zip_name)
         os.unlink(zip_name)
 
-    def configure(self):
+    def configure():
         self.requires.add("zlib/1.2.11@lasote/stable", private=False)
 
     def config_options(self):
         self.options["zlib"].shared = self.options.shared
 
-    def build(self):
+    def build():
         with tools.chdir(self.src_dir):
             cmake = CMake(self)
             shared = "-DBUILD_SHARED_LIBS=ON" if self.options.shared else ""
